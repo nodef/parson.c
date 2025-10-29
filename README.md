@@ -1,5 +1,5 @@
 ## About
-Parson is a lightweight [json](http://json.org) library written in C.
+Parson is a lightweight [json](http://json.org) library written in C, by Krzysztof Gabis.
 
 ## Features
 * Lightweight (only 2 files)
@@ -10,12 +10,26 @@ Parson is a lightweight [json](http://json.org) library written in C.
 
 ## Installation
 Run:
+```bash
+$ npm i parson.c
 ```
-git clone https://github.com/kgabis/parson.git
-```
-and copy parson.h and parson.c to you source code tree.
 
-Run ```make test``` to compile and run tests.
+And then include `parson.h` as follows:
+```c
+#include "node_modules/parson.c/parson.h"
+```
+
+You may also want to include `parson.c` as follows:
+```c
+#ifndef __PARSON_C__
+#define __PARSON_C__
+#include "node_modules/parson.c/parson.c"
+#endif
+```
+
+This will include both the function declaration and their definitions into a single file.
+
+Run ```cd node_modules/parson.c && make test``` to compile and run tests.
 
 ## Examples
 ### Parsing JSON
