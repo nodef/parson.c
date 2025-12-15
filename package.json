@@ -1,0 +1,24 @@
+{
+  "name": "parson.c",
+  "version": "1.5.3",
+  "description": "Lightweight JSON library written in C; Krzysztof Gabis (2012).",
+  "keywords": [
+    "c",
+    "library",
+    "json",
+    "parser"
+  ],
+  "homepage": "https://github.com/nodef/parson.c#readme",
+  "bugs": {
+    "url": "https://github.com/nodef/parson.c/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodef/parson.c.git"
+  },
+  "license": "MIT",
+  "main": "parson.h",
+  "scripts": {
+    "test": "make test"
+  }
+}
