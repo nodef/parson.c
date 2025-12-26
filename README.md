@@ -1,6 +1,8 @@
 ## About
 Parson is a lightweight [json](http://json.org) library written in C, by Krzysztof Gabis.
 
+<br>
+
 ## Features
 * Lightweight (only 2 files)
 * Simple API
@@ -8,57 +10,80 @@ Parson is a lightweight [json](http://json.org) library written in C, by Krzyszt
 * C89 compatible
 * Test suites
 
+<br>
+
 ## Installation
+
 Run:
-```bash
+
+```sh
 $ npm i parson.c
 ```
 
 And then include `parson.h` as follows:
+
 ```c
+// main.c
+#define PARSON_IMPLEMENTATION
 #include "node_modules/parson.c/parson.h"
+
+int main() { /* ... */ }
 ```
 
-You may also want to include `parson.c` as follows:
+And then compile with `clang` or `gcc` as usual.
+
+```bash
+$ clang main.c  # or, use gcc
+$ gcc   main.c
+```
+
+You may also use a simpler approach:
+
 ```c
-#ifndef __PARSON_C__
-#define __PARSON_C__
-#include "node_modules/parson.c/parson.c"
-#endif
+// main.c
+#define PARSON_IMPLEMENTATION
+#include <parson.h>
+
+int main() { /* ... */ }
 ```
 
-This will include both the function declaration and their definitions into a single file.
+If you add the path `node_modules/parson.c` to your compiler's include paths.
 
-Run ```cd node_modules/parson.c && make test``` to compile and run tests.
+```bash
+$ clang -I./node_modules/parson.c main.c  # or, use gcc
+$ gcc   -I./node_modules/parson.c main.c
+```
+
+<br>
 
 ## Examples
 ### Parsing JSON
-Here is a function, which prints basic commit info (date, sha and author) from a github repository.  
+Here is a function, which prints basic commit info (date, sha and author) from a github repository.
 ```c
 void print_commits_info(const char *username, const char *repo) {
     JSON_Value *root_value;
     JSON_Array *commits;
     JSON_Object *commit;
     size_t i;
-    
+
     char curl_command[512];
     char cleanup_command[256];
     char output_filename[] = "commits.json";
-    
+
     /* it ain't pretty, but it's not a libcurl tutorial */
-    sprintf(curl_command, 
+    sprintf(curl_command,
         "curl -s \"https://api.github.com/repos/%s/%s/commits\" > %s",
         username, repo, output_filename);
     sprintf(cleanup_command, "rm -f %s", output_filename);
     system(curl_command);
-    
+
     /* parsing json and validating output */
     root_value = json_parse_file(output_filename);
     if (json_value_get_type(root_value) != JSONArray) {
         system(cleanup_command);
         return;
     }
-    
+
     /* getting array from root value and printing commit info */
     commits = json_value_get_array(root_value);
     printf("%-10.10s %-10.10s %s\n", "Date", "SHA", "Author");
@@ -69,14 +94,14 @@ void print_commits_info(const char *username, const char *repo) {
                json_object_get_string(commit, "sha"),
                json_object_dotget_string(commit, "commit.author.name"));
     }
-    
+
     /* cleanup code */
     json_value_free(root_value);
     system(cleanup_command);
 }
 
 ```
-Calling ```print_commits_info("torvalds", "linux");``` prints:  
+Calling ```print_commits_info("torvalds", "linux");``` prints:
 ```
 Date       SHA        Author
 2012-10-15 dd8e8c4a2c David Rientjes
@@ -112,8 +137,8 @@ void persistence_example(void) {
 ```
 
 ### Serialization
-Creating JSON values is very simple thanks to the dot notation. 
-Object hierarchy is automatically created when addressing specific fields. 
+Creating JSON values is very simple thanks to the dot notation.
+Object hierarchy is automatically created when addressing specific fields.
 In the following example I create a simple JSON value containing basic information about a person.
 ```c
 void serialization_example(void) {
@@ -149,16 +174,29 @@ Output:
 }
 ```
 
+<br>
+
 ## Contributing
 
 I will always merge *working* bug fixes. However, if you want to add something new to the API, please create an "issue" on github for this first so we can discuss if it should end up in the library before you start implementing it.
 Remember to follow parson's code style and write appropriate tests.
 
+<br>
+
 ## My other projects
 * [ape](https://github.com/kgabis/ape) - simple programming language implemented in C library
-* [kgflags](https://github.com/kgabis/kgflags) - easy to use command-line flag parsing library   
+* [kgflags](https://github.com/kgabis/kgflags) - easy to use command-line flag parsing library
 * [agnes](https://github.com/kgabis/agnes) - header-only NES emulation library
+
+<br>
 
 ## License
 [The MIT License (MIT)](http://opensource.org/licenses/mit-license.php)
+
+<br>
+<br>
+
+
 [![SRC](https://img.shields.io/badge/src-repo-green?logo=Org)](https://github.com/kgabis/parson)
+[![ORG](https://img.shields.io/badge/org-nodef-green?logo=Org)](https://nodef.github.io)
+![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/parg.c)
