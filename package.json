@@ -1,6 +1,6 @@
 {
   "name": "parson.c",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Lightweight JSON library written in C; Krzysztof Gabis (2012).",
   "keywords": [
     "c",
